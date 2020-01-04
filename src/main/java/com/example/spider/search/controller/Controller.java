@@ -9,7 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collections;
 import java.util.List;
+
+import static java.util.Collections.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -23,9 +26,9 @@ private final SearchDao searchDao;
     // search database for keyword
     List<String> urls = searchDao.searchForLinks(keyword);
 
-    var headers = new HttpHeaders();
-    headers.put(HttpHeaders.CONTENT_TYPE, List.of("application/json"));
-    headers.put(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, List.of("*"));
+    HttpHeaders headers = new HttpHeaders();
+    headers.put(HttpHeaders.CONTENT_TYPE, singletonList("application/json"));
+    headers.put(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, singletonList("*"));
 
     return ResponseEntity.ok()
       .headers(headers)

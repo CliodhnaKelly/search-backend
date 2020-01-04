@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="search-backend" target="11" />
+      <module name="search-backend" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
