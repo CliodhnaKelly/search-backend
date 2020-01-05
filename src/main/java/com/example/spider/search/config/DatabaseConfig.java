@@ -4,6 +4,7 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.flywaydb.core.Flyway;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,6 +16,17 @@ public class DatabaseConfig {
 
   @NonNull
   private final DatabaseProperties databaseProperties;
+
+  @Bean
+  public Flyway migrate(DataSource dataSource) {
+    Flyway flyway = Flyway.configure()
+      .dataSource(dataSource)
+      .locations("classpath:db/migration")
+      .load();
+
+    flyway.migrate();
+    return flyway;
+  }
 
   @Bean
   public DataSource dataSource() {
