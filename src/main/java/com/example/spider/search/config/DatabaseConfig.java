@@ -22,6 +22,7 @@ public class DatabaseConfig {
     Flyway flyway = Flyway.configure()
       .dataSource(dataSource)
       .locations("classpath:db/migration")
+      .baselineOnMigrate(true)
       .load();
 
     flyway.migrate();
@@ -32,10 +33,10 @@ public class DatabaseConfig {
   public DataSource dataSource() {
     HikariConfig config = new HikariConfig();
     config.setDriverClassName(org.postgresql.Driver.class.getName());
+//    config.setSchema("spiderdb");
     config.setJdbcUrl(databaseProperties.getUrl());
     config.setUsername(databaseProperties.getUsername());
     config.setPassword(databaseProperties.getPassword());
-    config.setSchema("spiderdb");
     return new HikariDataSource(config);
   }
 }

@@ -1,7 +1,5 @@
 
-CREATE SCHEMA IF NOT EXISTS spiderdb;
-
-SET search_path TO spiderdb;
+-- CREATE SCHEMA IF NOT EXISTS spiderdb;
 
 CREATE TABLE webpage(
    page_id serial PRIMARY KEY,
