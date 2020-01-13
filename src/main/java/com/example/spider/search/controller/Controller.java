@@ -1,7 +1,11 @@
 package com.example.spider.search.controller;
 
+import com.example.spider.search.config.MicrometerConfig;
 import com.example.spider.search.dao.SearchDao;
 import java.util.List;
+
+import com.example.spider.search.domain.Urls;
+import io.micrometer.core.instrument.Counter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +20,25 @@ public class Controller {
 
 private final SearchDao searchDao;
 
+private final Counter numberOfFailedSearches;
+private final Counter numberOfSuccessfulSearches;
+
   @GetMapping("/search")
-  public ResponseEntity<List<String>> searchFor(@RequestParam String keyword) {
+  public ResponseEntity<Urls> searchFor(@RequestParam String keyword) {
 
     // search database for keyword
     List<String> urls = searchDao.searchForLinks(keyword);
+    if(urls.isEmpty()) {
+      numberOfFailedSearches.increment();
+    } else {
+      numberOfSuccessfulSearches.increment();
+    }
+
+    String adUrl = searchDao.searchForAd(keyword);
+
+    Urls urlResponse = new Urls();
+    urlResponse.setSearchResults(urls);
+    urlResponse.setAd(adUrl);
 
     HttpHeaders headers = new HttpHeaders();
     headers.put(HttpHeaders.CONTENT_TYPE, singletonList("application/json"));
@@ -28,7 +46,7 @@ private final SearchDao searchDao;
 
     return ResponseEntity.ok()
       .headers(headers)
-      .body(urls);
+      .body(urlResponse);
   }
 
 }
