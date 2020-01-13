@@ -1,7 +1,6 @@
 language: java
 jdk: openjdk8
-
-./mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+script: ./mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
 notifications:
   email:
