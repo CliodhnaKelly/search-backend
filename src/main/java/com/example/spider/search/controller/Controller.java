@@ -22,6 +22,7 @@ private final SearchDao searchDao;
 
 private final Counter numberOfFailedSearches;
 private final Counter numberOfSuccessfulSearches;
+private final Counter emptyAds;
 
   @GetMapping("/search")
   public ResponseEntity<Urls> searchFor(@RequestParam String keyword) {
@@ -35,6 +36,10 @@ private final Counter numberOfSuccessfulSearches;
     }
 
     String adUrl = searchDao.searchForAd(keyword);
+
+    if(adUrl.isEmpty()) {
+      emptyAds.increment();
+    }
 
     Urls urlResponse = new Urls();
     urlResponse.setSearchResults(urls);

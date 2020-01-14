@@ -25,6 +25,11 @@ public class MicrometerConfig {
   public Counter errorQueryingDb(MeterRegistry meterRegistry) {
     return meterRegistry.counter(SearchDao.class.getPackage().getName() + ".numberOfErrorsQueryingDb");
   }
+
+  @Bean
+  public Counter emptyAds(MeterRegistry meterRegistry) {
+    return meterRegistry.counter(Controller.class.getPackage().getName() + ".numberOfEmptyAds");
+  }
 }
 
 
