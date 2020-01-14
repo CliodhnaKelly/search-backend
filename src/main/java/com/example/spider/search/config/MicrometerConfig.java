@@ -2,7 +2,6 @@ package com.example.spider.search.config;
 
 import com.example.spider.search.controller.Controller;
 import com.example.spider.search.dao.SearchDao;
-import io.micrometer.core.aop.TimedAspect;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.context.annotation.Bean;
